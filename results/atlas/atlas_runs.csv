@@ -1,10 +1,13 @@
-cohort,contrast,stratum,status,reason,compartment,dir,n_case,n_control,covariates
-GSE153960,,,failed,Not a gzipped file (b'<!'),,,,,
-GSE5281,AD,Entorhinal cortex,ok,,CNS,GSE5281/AD_Entorhinal_cortex,10.0,13.0,"['sex_male', 'age']"
-GSE5281,AD,Hippocampus,ok,,CNS,GSE5281/AD_Hippocampus,10.0,13.0,"['sex_male', 'age']"
-GSE5281,AD,Middle temporal gyrus,ok,,CNS,GSE5281/AD_Middle_temporal_gyrus,16.0,12.0,"['sex_male', 'age']"
-GSE5281,AD,Posterior cingulate,ok,,CNS,GSE5281/AD_Posterior_cingulate,9.0,13.0,"['sex_male', 'age']"
-GSE5281,AD,Superior frontal gyrus,ok,,CNS,GSE5281/AD_Superior_frontal_gyrus,23.0,11.0,"['sex_male', 'age']"
-GSE5281,AD,Primary visual cortex,ok,,CNS,GSE5281/AD_Primary_visual_cortex,19.0,12.0,"['sex_male', 'age']"
-GSE112676,ALS,All,ok,,Blood,GSE112676/ALS_All,233.0,508.0,['sex_male']
-GSE112680,ALS,All,ok,,Blood,GSE112680/ALS_All,164.0,137.0,[]
+cohort,contrast,stratum,status,compartment,dir,n_case,n_control,covariates
+GSE153960,ALS,Spinal cord (cervical),ok,CNS,GSE153960/ALS_Spinal_cord_cervical,160,41,[]
+GSE153960,ALS,Spinal cord (lumbar),ok,CNS,GSE153960/ALS_Spinal_cord_lumbar,147,44,[]
+GSE153960,ALS,Motor cortex (lateral),ok,CNS,GSE153960/ALS_Motor_cortex_lateral,83,19,[]
+GSE153960,ALS,Frontal cortex,ok,CNS,GSE153960/ALS_Frontal_cortex,156,56,[]
+GSE5281,AD,Entorhinal cortex,ok,CNS,GSE5281/AD_Entorhinal_cortex,10,13,"['sex_male', 'age']"
+GSE5281,AD,Hippocampus,ok,CNS,GSE5281/AD_Hippocampus,10,13,"['sex_male', 'age']"
+GSE5281,AD,Middle temporal gyrus,ok,CNS,GSE5281/AD_Middle_temporal_gyrus,16,12,"['sex_male', 'age']"
+GSE5281,AD,Posterior cingulate,ok,CNS,GSE5281/AD_Posterior_cingulate,9,13,"['sex_male', 'age']"
+GSE5281,AD,Superior frontal gyrus,ok,CNS,GSE5281/AD_Superior_frontal_gyrus,23,11,"['sex_male', 'age']"
+GSE5281,AD,Primary visual cortex,ok,CNS,GSE5281/AD_Primary_visual_cortex,19,12,"['sex_male', 'age']"
+GSE112676,ALS,All,ok,Blood,GSE112676/ALS_All,233,508,['sex_male']
+GSE112680,ALS,All,ok,Blood,GSE112680/ALS_All,164,137,[]

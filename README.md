@@ -8,9 +8,26 @@
 
 sphingomap-CNS extends [sphingomap](https://github.com/DhruvASharma2004/sphingomap), which was built for colorectal cancer, to the central nervous system and blood.
 
-> **About the figures below:** they come from the built-in **synthetic** demo (`sphingomap-cns demo`). That data has planted effects so you can check that the pipeline recovers them. **They are not biological findings.** Real-cohort results are written to `results/atlas/` by the [GEO atlas workflow](.github/workflows/atlas.yml).
+## Results on public data
 
-<p align="center"><img src="docs/figures/pathway_meta_ALS.png" width="760" alt="Sphingolipid-peroxidation pathway map coloured by meta-analysed effect size (synthetic demo)"></p>
+<p align="center"><img src="docs/figures/real_ALS_CNS_microglia_adjusted.png" width="760" alt="ALS spinal cord and cortex vs controls: meta-analysed effect sizes on the sphingolipid pathway, adjusted for microglial burden"></p>
+
+ALS vs non-neurological controls in GSE153960: cervical and lumbar spinal cord, lateral motor cortex and frontal cortex, about 550 ALS and 160 control samples, one per donor per tissue. Effect sizes are random-effects meta-analysed and **adjusted for each sample's microglia/myeloid score**, so the shifts below are not explained by microglial expansion alone.
+
+- **Ceramide flux shifts toward glycosphingolipids.** UGCG (glucosylceramide synthase) g ≈ +0.8 and the lactosylceramide synthases B4GALT5/6 ≈ +0.6 are up in all four tissues, with the ceramidase ASAH1 ≈ +1.0.
+- **Ceramide is made de novo, not from sphingomyelin.** De novo synthesis genes (SPTLC1, KDSR, DEGS1; CERS6 ≈ +1.0) go up, while the neutral sphingomyelinases SMPD3/SMPD4 go down. That points to de novo synthesis, rather than sphingomyelin hydrolysis, as the transcriptional source of ceramide.
+- **The S1P axis tilts away from SPHK2** (≈ −0.9 in all four tissues), and SGPP1 rises.
+- **FOXP3 transcripts are lower in all four ALS CNS tissues** (≈ −0.7).
+- **AD neurons (GSE5281) show a different pattern.** The glycosphingolipid branch is lower, and so are the lipid-peroxide and 4-HNE defences GPX4 and GSTA4 (≈ −1.4 and −1.5).
+
+These are transcript-level associations in post-mortem tissue: they are hypotheses for lipidomic follow-up. Adjusting for microglia leaves other cell types (astrocytes, oligodendrocytes) unadjusted, and GSE153960 has no sex or age annotations. Full tables: [`results/atlas_microglia_adjusted/ATLAS_REPORT.md`](results/atlas_microglia_adjusted/ATLAS_REPORT.md) (adjusted) and [`results/atlas/ATLAS_REPORT.md`](results/atlas/ATLAS_REPORT.md) (unadjusted). Download `atlas.html` from either folder for the interactive view.
+
+<details><summary>Synthetic demo figure</summary>
+
+The built-in demo (`sphingomap-cns demo`) uses **synthetic** data with planted effects to show that the pipeline recovers them. These are not biological findings.
+
+<p align="center"><img src="docs/figures/pathway_meta_ALS.png" width="640" alt="Synthetic demo pathway map"></p>
+</details>
 
 ## Why
 
@@ -95,7 +112,7 @@ sphingomap-cns run -e data/pb_expression.tsv -s data/pb_samples.csv --stratum-co
 protein). Counts (`--counts`), linear intensities (log2-transformed automatically) and log-scale values are all accepted.
 `samples.csv` needs a `sample` column plus the columns you reference. See [`docs/data-guide.md`](docs/data-guide.md).
 
-## Demo output (synthetic)
+## Demo output (synthetic data, not findings)
 
 | | |
 |---|---|

@@ -1,0 +1,14 @@
+name: probe GEO files
+on: workflow_dispatch
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "== suppl listing"; curl -sL https://ftp.ncbi.nlm.nih.gov/geo/series/GSE153nnn/GSE153960/suppl/ | grep -o 'href="[^"]*"' | head -50
+          echo "== NCBI counts response"; curl -sL -o c.bin -w "%{http_code} %{content_type} %{size_download}\n" "https://www.ncbi.nlm.nih.gov/geo/download/?type=rnaseq_counts&acc=GSE153960&format=file&file=GSE153960_raw_counts_GRCh38.p13_NCBI.tsv.gz"; head -c 600 c.bin | strings | head -20
+          echo "== GEO page NCBI-generated?"; curl -sL "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE153960" | grep -i -o 'rnaseq_counts[^"]*\|NCBI-generated[^<]*\|counts[^<"]\{0,80\}' | head -20
+          for f in $(curl -sL https://ftp.ncbi.nlm.nih.gov/geo/series/GSE153nnn/GSE153960/suppl/ | grep -o 'href="GSE153960[^"]*"' | cut -d'"' -f2); do
+            echo "== head of $f"; curl -sL "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE153nnn/GSE153960/suppl/$f" | (gzip -dc 2>/dev/null || cat) | head -c 1500 | cut -c1-400 | head -5
+          done
+          echo "== group values"; curl -sL https://ftp.ncbi.nlm.nih.gov/geo/series/GSE153nnn/GSE153960/matrix/ | grep -o 'href="[^"]*"'

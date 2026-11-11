@@ -1,0 +1,395 @@
+{
+  "label": "GSE153960 ALS - Spinal cord (cervical)",
+  "version": "0.1.0",
+  "date": "2026-11-11",
+  "comparison": "ALS vs Control",
+  "design": "unpaired",
+  "covariates": [
+    "microglia_myeloid_score"
+  ],
+  "n_case": 160,
+  "n_control": 41,
+  "n_pairs": null,
+  "n_genes_tested": 81,
+  "missing_genes": [
+    "CERS3",
+    "ACER1",
+    "S1PR4",
+    "TNF",
+    "IFNG",
+    "ALOX15",
+    "IL2RA",
+    "CTLA4",
+    "TNFRSF18"
+  ],
+  "n_significant": 37,
+  "up": [
+    "ASAH1",
+    "SLC7A11",
+    "AKR1C1",
+    "CERS6",
+    "SPTLC3",
+    "ALOX15B",
+    "HEXB",
+    "S1PR3",
+    "UGCG",
+    "ALDH2",
+    "IKZF2",
+    "CERT1",
+    "B4GALT6",
+    "TYROBP",
+    "NFE2L2",
+    "B4GALT5",
+    "S1PR1",
+    "CD68"
+  ],
+  "down": [
+    "NEFH",
+    "NEFM",
+    "SPNS2",
+    "PTGS2",
+    "PRPH",
+    "ACER2",
+    "SPHK2",
+    "SGPP2",
+    "S1PR5",
+    "DEGS2",
+    "SMPD4",
+    "CD14",
+    "ALOX12",
+    "SMPD3",
+    "NCF1",
+    "ALOX5",
+    "CERS4",
+    "S1PR2",
+    "GBA2"
+  ],
+  "focus_genes": [
+    {
+      "gene": "SMPD1",
+      "log2FC": -0.19236820584010256,
+      "fdr": 0.005170900047034735
+    },
+    {
+      "gene": "SMPD2",
+      "log2FC": -0.1270326480825727,
+      "fdr": 0.051020881763522236
+    },
+    {
+      "gene": "SMPD3",
+      "log2FC": -0.3194349540711626,
+      "fdr": 0.012697590937078576
+    },
+    {
+      "gene": "CERS1",
+      "log2FC": -0.08253499479867207,
+      "fdr": 0.3387945029683581
+    },
+    {
+      "gene": "CERS2",
+      "log2FC": -0.17008024663152974,
+      "fdr": 0.010324660584282015
+    },
+    {
+      "gene": "CERS4",
+      "log2FC": -0.27224841055935567,
+      "fdr": 6.170177572102688e-05
+    },
+    {
+      "gene": "CERS5",
+      "log2FC": -0.13993627889451252,
+      "fdr": 0.04201417828267944
+    },
+    {
+      "gene": "CERS6",
+      "log2FC": 0.6811965736227641,
+      "fdr": 1.6926988982128008e-08
+    },
+    {
+      "gene": "ASAH1",
+      "log2FC": 0.9347010280305779,
+      "fdr": 1.1950684650165111e-09
+    },
+    {
+      "gene": "SGMS1",
+      "log2FC": -0.03493683909996313,
+      "fdr": 0.5568496465072952
+    },
+    {
+      "gene": "SGMS2",
+      "log2FC": 0.0279570620203658,
+      "fdr": 0.7734042841176986
+    },
+    {
+      "gene": "UGCG",
+      "log2FC": 0.49133094161277224,
+      "fdr": 0.0003105132293238972
+    },
+    {
+      "gene": "SPHK1",
+      "log2FC": -0.1253609639711475,
+      "fdr": 0.35785776215133447
+    },
+    {
+      "gene": "S1PR1",
+      "log2FC": 0.2603843922609746,
+      "fdr": 0.0014522833094748452
+    },
+    {
+      "gene": "GPX4",
+      "log2FC": 0.02675091363183473,
+      "fdr": 0.7418828873804423
+    },
+    {
+      "gene": "ACSL4",
+      "log2FC": 0.20254182118144992,
+      "fdr": 0.08223522224320581
+    }
+  ],
+  "scores": [
+    {
+      "score": "microglia_myeloid",
+      "mean_difference": -2.3334240357890727e-15,
+      "effect": 1.403728991570932,
+      "p": 1.2165639692664727e-21,
+      "fdr": 1.5815331600464144e-20
+    },
+    {
+      "score": "antioxidant_defense",
+      "mean_difference": 0.45021999805830654,
+      "effect": 1.61800740464816,
+      "p": 4.9736101297067966e-08,
+      "fdr": 3.2328465843094175e-07
+    },
+    {
+      "score": "cpa_index",
+      "mean_difference": -0.4343334372654864,
+      "effect": -0.4247935430171806,
+      "p": 1.2440722078783608e-07,
+      "fdr": 5.390979567472897e-07
+    },
+    {
+      "score": "sphingomyelin_cycle",
+      "mean_difference": -0.4989400741813308,
+      "effect": -1.0683479719191813,
+      "p": 1.4095094953262886e-06,
+      "fdr": 4.5809058598104375e-06
+    },
+    {
+      "score": "s1p_axis",
+      "mean_difference": -0.31697381927488993,
+      "effect": -0.4091928329616179,
+      "p": 0.00018141856545583407,
+      "fdr": 0.00047168827018516856
+    },
+    {
+      "score": "glycosphingolipid_branch",
+      "mean_difference": 0.27925161421739014,
+      "effect": 1.3389842749048273,
+      "p": 0.0017029851524917301,
+      "fdr": 0.0036898011637320816
+    },
+    {
+      "score": "peroxidation_drivers",
+      "mean_difference": -0.18444180856473866,
+      "effect": 0.5203652260170116,
+      "p": 0.014171295588374716,
+      "fdr": 0.024701323650224007
+    },
+    {
+      "score": "axonal_integrity",
+      "mean_difference": -0.46033387149950505,
+      "effect": -0.37031123083754525,
+      "p": 0.015200814553984004,
+      "fdr": 0.024701323650224007
+    },
+    {
+      "score": "ceramide_catabolism",
+      "mean_difference": 0.23212605273686443,
+      "effect": 0.6712048449890762,
+      "p": 0.02802583468829452,
+      "fdr": 0.04048176121642542
+    },
+    {
+      "score": "smase_triggers",
+      "mean_difference": 0.18772606466515268,
+      "effect": 1.0239036827404269,
+      "p": 0.08777859332671882,
+      "fdr": 0.11411217132473446
+    },
+    {
+      "score": "rheostat_index",
+      "mean_difference": -0.1277756540991052,
+      "effect": -0.08863253435491629,
+      "p": 0.29698586797902826,
+      "fdr": 0.3509832985206698
+    },
+    {
+      "score": "treg_axis",
+      "mean_difference": 0.043373139997070334,
+      "effect": 0.8927058086114539,
+      "p": 0.5570588232955753,
+      "fdr": 0.60348039190354
+    },
+    {
+      "score": "de_novo_synthesis",
+      "mean_difference": -0.012640074097275175,
+      "effect": 0.11861226578885589,
+      "p": 0.8758887416004514,
+      "fdr": 0.8758887416004514
+    }
+  ],
+  "score_genes": {
+    "de_novo_synthesis": [
+      "SPTLC1",
+      "SPTLC2",
+      "SPTLC3",
+      "KDSR",
+      "CERS1",
+      "CERS2",
+      "CERS4",
+      "CERS5",
+      "CERS6",
+      "DEGS1",
+      "DEGS2"
+    ],
+    "sphingomyelin_cycle": [
+      "SGMS1",
+      "SGMS2",
+      "SMPD1",
+      "SMPD2",
+      "SMPD3",
+      "SMPD4"
+    ],
+    "ceramide_catabolism": [
+      "ASAH1",
+      "ASAH2",
+      "ACER2",
+      "ACER3"
+    ],
+    "s1p_axis": [
+      "SPHK1",
+      "SPHK2",
+      "SGPP1",
+      "SGPP2",
+      "SGPL1",
+      "SPNS2",
+      "S1PR1",
+      "S1PR2",
+      "S1PR3",
+      "S1PR5"
+    ],
+    "glycosphingolipid_branch": [
+      "UGCG",
+      "B4GALT5",
+      "B4GALT6",
+      "ST3GAL5",
+      "A4GALT",
+      "GBA1",
+      "GBA2",
+      "GLA",
+      "GLB1",
+      "HEXA",
+      "HEXB"
+    ],
+    "transport": [
+      "CERT1"
+    ],
+    "smase_triggers": [
+      "IL1B",
+      "TNFRSF1A",
+      "IL1R1",
+      "IFNGR1",
+      "NSMAF"
+    ],
+    "peroxidation_drivers": [
+      "ACSL4",
+      "LPCAT3",
+      "ALOX5",
+      "ALOX12",
+      "ALOX15B",
+      "PTGS2",
+      "CYBB",
+      "NCF1"
+    ],
+    "antioxidant_defense": [
+      "GPX4",
+      "SLC7A11",
+      "AIFM2",
+      "NFE2L2",
+      "HMOX1",
+      "ALDH2",
+      "GSTA4",
+      "AKR1C1"
+    ],
+    "microglia_myeloid": [
+      "AIF1",
+      "CD68",
+      "TREM2",
+      "TYROBP",
+      "ITGAM",
+      "CD14",
+      "C1QA"
+    ],
+    "treg_axis": [
+      "FOXP3",
+      "IKZF2",
+      "IL2RB",
+      "IL10",
+      "TGFB1"
+    ],
+    "axonal_integrity": [
+      "NEFL",
+      "NEFM",
+      "NEFH",
+      "PRPH",
+      "INA"
+    ],
+    "rheostat_index": [
+      "SPHK1",
+      "SPHK2",
+      "S1PR1",
+      "SPNS2",
+      "UGCG",
+      "B4GALT5",
+      "B4GALT6",
+      "ACER2",
+      "CERS2",
+      "CERS5",
+      "CERS6",
+      "SMPD1",
+      "SMPD3",
+      "SGPP1",
+      "SGPL1",
+      "GBA1"
+    ],
+    "cpa_index": [
+      "SMPD1",
+      "SMPD2",
+      "SMPD3",
+      "NSMAF",
+      "CERS2",
+      "CERS5",
+      "CERS6",
+      "ACSL4",
+      "LPCAT3",
+      "ALOX5",
+      "CYBB",
+      "NCF1",
+      "SGMS1",
+      "SGMS2",
+      "UGCG",
+      "GPX4",
+      "SLC7A11",
+      "AIFM2",
+      "ALDH2",
+      "GSTA4"
+    ]
+  },
+  "cohort": "GSE153960",
+  "contrast": "ALS",
+  "stratum": "Spinal cord (cervical)",
+  "compartment": "CNS",
+  "scale": "log2 CPM (NCBI raw counts)",
+  "source": "NYGC ALS Consortium / Target ALS post-mortem CNS RNA-seq (New York Genome Center ALS Consortium (GEO GSE153960))"
+}

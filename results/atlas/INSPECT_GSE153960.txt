@@ -1,0 +1,64 @@
+GSE153960: 1838 samples
+
+- title: 1838 distinct values (e.g. post-mortem tissue [CGND-HRA-00027], post-mortem tissue [CGND-HRA-00028], post-mortem tissue [CGND-HRA-00029])
+- source:
+      331  Cerebellum
+      327  Cortex Frontal
+      258  Spinal Cord Cervical
+      239  Spinal Cord Lumbar
+      137  Cortex Motor Lateral
+      137  Cortex Motor Medial
+      102  Cortex Temporal
+       96  Cortex Occipital
+       82  Spinal Cord Thoracic
+       74  Cortex Motor Unspecified
+       53  Hippocampus
+        2  Cortex Sensory
+- platform:
+     1124  GPL24676
+      714  GPL16791
+- project:
+      990  Target ALS PM core
+      848  NYGC ALS Consortium
+- tissue:
+      331  Cerebellum
+      327  Cortex Frontal
+      258  Spinal Cord Cervical
+      239  Spinal Cord Lumbar
+      137  Cortex Motor Lateral
+      137  Cortex Motor Medial
+      102  Cortex Temporal
+       96  Cortex Occipital
+       82  Spinal Cord Thoracic
+       74  Cortex Motor Unspecified
+       53  Hippocampus
+        2  Cortex Sensory
+- subject id: 478 distinct values (e.g. NEUYV496XLP, JHU82, JHU83)
+- group:
+     1012  ALS Spectrum MND
+      288  Non-Neurological Control
+      278  ALS Spectrum MND, Other Neurological Disorders
+      234  Other Neurological Disorders
+        8  Other Neurological DIsorders
+        7  Pre-fALS, Other Neurological Disorders
+        4  Unknown
+        4  Other MND
+        3  Pre-fALS
+- sample id alt: 1837 distinct values (e.g. CGND-HRA-01288-2, CGND-HRA-00027, CGND-HRA-00028)
+- library preparation method:
+     1124  Automated KAPA Total
+      714  Manual KAPA Total
+
+Group assignment with the registry patterns (Case/Control x stratum):
+
+  ALS:
+col_0        Case  unassigned
+row_0                        
+Spinal cord   360         219
+no stratum    663         596
+
+  FTD:
+col_0        Control  unassigned
+row_0                           
+Spinal cord       96         483
+no stratum       192        1067

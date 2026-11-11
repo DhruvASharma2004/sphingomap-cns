@@ -1,0 +1,10 @@
+cohort,contrast,stratum,status,reason,compartment,dir,n_case,n_control,covariates
+GSE153960,,,failed,Not a gzipped file (b'<!'),,,,,
+GSE5281,AD,Entorhinal cortex,ok,,CNS,GSE5281/AD_Entorhinal_cortex,10.0,13.0,"['sex_male', 'age']"
+GSE5281,AD,Hippocampus,ok,,CNS,GSE5281/AD_Hippocampus,10.0,13.0,"['sex_male', 'age']"
+GSE5281,AD,Middle temporal gyrus,ok,,CNS,GSE5281/AD_Middle_temporal_gyrus,16.0,12.0,"['sex_male', 'age']"
+GSE5281,AD,Posterior cingulate,ok,,CNS,GSE5281/AD_Posterior_cingulate,9.0,13.0,"['sex_male', 'age']"
+GSE5281,AD,Superior frontal gyrus,ok,,CNS,GSE5281/AD_Superior_frontal_gyrus,23.0,11.0,"['sex_male', 'age']"
+GSE5281,AD,Primary visual cortex,ok,,CNS,GSE5281/AD_Primary_visual_cortex,19.0,12.0,"['sex_male', 'age']"
+GSE112676,ALS,All,ok,,Blood,GSE112676/ALS_All,233.0,508.0,['sex_male']
+GSE112680,ALS,All,ok,,Blood,GSE112680/ALS_All,164.0,137.0,[]

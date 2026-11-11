@@ -1,0 +1,33 @@
+GSE112676: 741 samples
+
+- title: 741 distinct values (e.g. whole blood gene expression profile_ALS02238, whole blood gene expression profile_ALS02124, whole blood gene expression profile_ALS02203)
+- source:
+      508  whole blood_CON
+      233  whole blood_ALS
+- platform:
+      741  GPL6947
+- description:
+      741  unique sample
+- sex:
+      421  m
+      320  f
+- diagnosis:
+      508  CON
+      233  ALS
+- site_onset:
+      508  NA
+      143  s
+       90  b
+- age_onset: 227 distinct values (e.g. NA, 56.43, 70.29)
+- survival_yr: 234 distinct values (e.g. NA, 0.799390828199861, 0.452313483915134)
+- censored:
+      508  NA
+      209  0
+       24  1
+
+Group assignment with the registry patterns (Case/Control x stratum):
+
+  ALS:
+col_0  Case  Control
+row_0               
+All     233      508

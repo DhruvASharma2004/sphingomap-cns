@@ -1,0 +1,65 @@
+GSE5281: 161 samples
+
+- title: 161 distinct values (e.g. EC control 1, EC control 2, EC control 3)
+- source:
+       23  brain, Entorhinal Cortex
+       23  brain, Superior frontal gyrus
+       19  brain, Primary visual cortex
+       16  brain, Middle temporal gyrus
+       13  brain, hippocampus
+       12  brain, Medial Temporal Gyrus
+       12  brain, Primary Visual Cortex
+       11  brain, Superior Frontal Gyrus
+       10  brain, Hippocampus
+        9  brain, Posterior cingulate cortex
+        7  brain, Posterior cingulate
+        6  brain, Posterior Cingulate
+- platform:
+      161  GPL570
+- description: 161 distinct values (e.g. arrayconsortium.tgen.org::biosample.433887, arrayconsortium.tgen.org::biosample.433901, arrayconsortium.tgen.org::biosample.433915)
+- sample amount:
+       86  10 ng
+       75  10 ug
+- bio-source name: 161 distinct values (e.g. EC control 1, EC control 2, EC control 3)
+- organism:
+      161  Human
+- organ/tissue type:
+      161  brain
+- organ region:
+       34  Superior Frontal Gyrus
+       31  Primary Visual Cortex
+       28  Medial Temporal Gyrus
+       23  Entorhinal Cortex
+       23  hippocampus
+        9  Posterior Singulate
+        7  Posterior cingulate
+        6  Posterior Cingulate
+- cell type:
+       82  layer III neurons
+       79  pyramidal neuron
+- ethnicity:
+       82  Caucasian
+       79  unknown
+- developmental stage:
+      161  Adult
+- disease state:
+       87  Alzheimer's Disease
+       74  normal
+- sex:
+      103  male
+       58  female
+- genetic variation:
+      161  None
+- age: 30 distinct values (e.g. 79 years, 80 years, 78 years)
+
+Group assignment with the registry patterns (Case/Control x stratum):
+
+  AD:
+col_0                   Case  Control
+row_0                                
+Entorhinal cortex         10       13
+Hippocampus               10       13
+Middle temporal gyrus     16       12
+Posterior cingulate        9       13
+Primary visual cortex     19       12
+Superior frontal gyrus    23       11

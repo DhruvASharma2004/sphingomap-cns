@@ -1,0 +1,35 @@
+GSE112680: 376 samples
+
+- title: 376 distinct values (e.g. whole blood gene expression profile_ALS03718, whole blood gene expression profile_ALS03729, whole blood gene expression profile_ALS05873)
+- source:
+      164  whole blood_ALS
+      137  whole blood_CON
+       75  whole blood_MIM
+- platform:
+      376  GPL10558
+- description:
+      376  unique sample
+- sex:
+      233  m
+      143  v
+- diagnosis:
+      164  ALS
+      137  CON
+       75  MIM
+- site_onset:
+      207  NA
+      113  s
+       56  b
+- age_onset: 168 distinct values (e.g. NA, 60.92, 55.41)
+- survival_yr: 170 distinct values (e.g. NA, 4.89427104722792, 1.47279945242984)
+- censored:
+      201  NA
+      135  0
+       40  1
+
+Group assignment with the registry patterns (Case/Control x stratum):
+
+  ALS:
+col_0  Case  Control  unassigned
+row_0                           
+All     164      137          75

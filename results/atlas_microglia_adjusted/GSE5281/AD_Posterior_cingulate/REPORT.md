@@ -77,19 +77,19 @@ Scores are mean z-scores relative to the control group. The rheostat index is pr
 
 | Score | Mean difference | Hedges' g | FDR |
 |---|---:|---:|---:|
-| Glycosphingolipid branch | -0.69 | -2.29 | 1.53e-03 |
-| De novo synthesis | +0.45 | +1.08 | 4.71e-03 |
-| Ceramide-peroxidation index | +0.83 | +1.48 | 5.99e-03 |
-| Antioxidant / 4-HNE defence | -0.94 | -1.34 | 5.99e-03 |
-| Treg axis | +0.79 | +1.31 | 1.79e-02 |
-| S1P axis | +0.43 | +1.27 | 4.75e-02 |
-| Axonal integrity | -1.76 | -1.10 | 8.44e-02 |
-| Lipid peroxidation drivers | +0.42 | +0.82 | 9.88e-02 |
-| Sphingomyelin cycle | +0.41 | +0.73 | 2.42e-01 |
-| Cytokine SMase triggers | -0.28 | -0.25 | 5.14e-01 |
-| Rheostat index | -0.13 | -0.33 | 6.25e-01 |
-| Ceramide catabolism | -0.10 | -0.23 | 7.89e-01 |
-| Microglia / myeloid activation | +0.00 | +0.52 | 8.12e-01 |
+| Glycosphingolipid branch | -0.69 | -2.07 | 1.53e-03 |
+| De novo synthesis | +0.45 | +1.72 | 4.71e-03 |
+| Ceramide-peroxidation index | +0.83 | +1.56 | 5.99e-03 |
+| Antioxidant / 4-HNE defence | -0.94 | -1.54 | 5.99e-03 |
+| Treg axis | +0.79 | +1.28 | 1.79e-02 |
+| S1P axis | +0.43 | +1.05 | 4.75e-02 |
+| Axonal integrity | -1.76 | -0.90 | 8.44e-02 |
+| Lipid peroxidation drivers | +0.42 | +0.84 | 9.88e-02 |
+| Sphingomyelin cycle | +0.41 | +0.60 | 2.42e-01 |
+| Cytokine SMase triggers | -0.28 | -0.36 | 5.14e-01 |
+| Rheostat index | -0.13 | -0.27 | 6.25e-01 |
+| Ceramide catabolism | -0.10 | -0.15 | 7.43e-01 |
+| Microglia / myeloid activation | +0.00 | +0.14 | 7.43e-01 |
 
 ![scores](figures/module_scores.png)
 

@@ -75,18 +75,18 @@ Scores are mean z-scores relative to the control group. The rheostat index is pr
 
 | Score | Mean difference | Hedges' g | FDR |
 |---|---:|---:|---:|
-| Microglia / myeloid activation | +0.00 | -0.08 | 3.08e-12 |
-| Cytokine SMase triggers | +0.29 | +0.47 | 1.19e-04 |
-| Rheostat index | -0.20 | -0.38 | 2.82e-03 |
-| Antioxidant / 4-HNE defence | -0.16 | -0.37 | 6.93e-03 |
-| Treg axis | -0.10 | -0.25 | 6.63e-02 |
-| De novo synthesis | -0.08 | -0.23 | 8.78e-02 |
-| Ceramide catabolism | -0.11 | -0.22 | 1.45e-01 |
-| Lipid peroxidation drivers | -0.06 | -0.18 | 2.60e-01 |
+| Microglia / myeloid activation | -0.00 | -0.86 | 1.65e-11 |
+| Cytokine SMase triggers | +0.29 | +0.50 | 1.19e-04 |
+| Rheostat index | -0.20 | -0.40 | 2.82e-03 |
+| Antioxidant / 4-HNE defence | -0.16 | -0.36 | 6.93e-03 |
+| Treg axis | -0.10 | -0.26 | 6.63e-02 |
+| De novo synthesis | -0.08 | -0.24 | 8.78e-02 |
+| Ceramide catabolism | -0.11 | -0.20 | 1.45e-01 |
+| Lipid peroxidation drivers | -0.06 | -0.16 | 2.60e-01 |
 | Sphingomyelin cycle | +0.03 | +0.06 | 7.91e-01 |
 | Axonal integrity | -0.03 | -0.06 | 7.91e-01 |
 | S1P axis | -0.01 | -0.02 | 9.53e-01 |
-| Glycosphingolipid branch | +0.00 | -0.03 | 9.53e-01 |
+| Glycosphingolipid branch | +0.00 | +0.01 | 9.53e-01 |
 | Ceramide-peroxidation index | +0.00 | +0.01 | 9.53e-01 |
 
 ![scores](figures/module_scores.png)

@@ -27,9 +27,9 @@ Open `atlas.html` for the interactive version (sortable gene table, per-stratum 
 
 ![scores](figures/atlas_scores.png)
 
-## AD vs control: random-effects meta-analysis
+## AD CNS vs control: random-effects meta-analysis
 
-![meta](figures/pathway_meta_AD.png)
+![meta](figures/pathway_meta_AD_CNS.png)
 
 | Gene | Module | meta g | 95% CI | I² | strata up / down (FDR<0.05) | FDR |
 |---|---|---:|---|---:|---|---:|
@@ -64,39 +64,73 @@ Open `atlas.html` for the interactive version (sortable gene table, per-stratum 
 | S1PR1 | S1P axis | +0.44 | -0.15 to +1.03 | 68% | 2 / 0 of 6 | 2.50e-01 |
 | ACSL4 | Lipid peroxidation drivers | -0.61 | -1.05 to -0.18 | 44% | 0 / 1 of 6 | 2.39e-02 |
 
-## ALS vs control: random-effects meta-analysis
+## ALS Blood vs control: random-effects meta-analysis
 
-![meta](figures/pathway_meta_ALS.png)
+![meta](figures/pathway_meta_ALS_Blood.png)
 
 | Gene | Module | meta g | 95% CI | I² | strata up / down (FDR<0.05) | FDR |
 |---|---|---:|---|---:|---|---:|
-| IFNGR1 | Cytokine SMase triggers | +0.72 | +0.58 to +0.86 | 30% | 6 / 0 of 6 | 1.18e-22 |
-| SGPP1 | S1P axis | +0.90 | +0.72 to +1.08 | 0% | 4 / 0 of 4 | 2.06e-20 |
-| IL10 | Treg axis | +1.11 | +0.86 to +1.36 | 0% | 2 / 0 of 2 | 2.38e-16 |
-| DEGS2 | De novo synthesis | -0.75 | -0.94 to -0.57 | 0% | 0 / 3 of 4 | 7.27e-15 |
-| CERS4 | De novo synthesis | -0.73 | -0.91 to -0.55 | 0% | 0 / 3 of 4 | 5.16e-14 |
-| S1PR4 | S1P axis | +0.50 | +0.37 to +0.63 | 0% | 2 / 0 of 2 | 5.56e-13 |
-| GLA | Glycosphingolipid branch | +0.82 | +0.60 to +1.04 | 30% | 4 / 0 of 4 | 3.62e-12 |
-| B4GALT6 | Glycosphingolipid branch | +0.61 | +0.43 to +0.79 | 0% | 4 / 0 of 4 | 2.43e-10 |
-| ACSL4 | Lipid peroxidation drivers | +0.85 | +0.56 to +1.14 | 58% | 4 / 0 of 4 | 5.91e-08 |
-| SMPD3 | Sphingomyelin cycle | -0.53 | -0.71 to -0.35 | 58% | 0 / 6 of 6 | 7.08e-08 |
-| SPHK2 | S1P axis | -0.81 | -1.10 to -0.53 | 83% | 0 / 6 of 6 | 2.02e-07 |
-| CERT1 | Ceramide transport | +0.77 | +0.48 to +1.06 | 83% | 5 / 0 of 6 | 9.82e-07 |
-| FOXP3 | Treg axis | -0.69 | -0.96 to -0.41 | 54% | 0 / 4 of 4 | 6.29e-06 |
-| GPX4 | Antioxidant / 4-HNE defence | +0.43 | +0.25 to +0.61 | 58% | 5 / 0 of 6 | 1.51e-05 |
-| B4GALT5 | Glycosphingolipid branch | +0.64 | +0.37 to +0.91 | 81% | 5 / 0 of 6 | 1.67e-05 |
-| SMPD1 | Sphingomyelin cycle | -0.19 | -0.40 to +0.03 | 70% | 0 / 1 of 6 | 1.42e-01 |
-| SMPD2 | Sphingomyelin cycle | -0.13 | -0.35 to +0.10 | 73% | 0 / 1 of 6 | 3.67e-01 |
-| CERS1 | De novo synthesis | -0.58 | -0.95 to -0.21 | 75% | 0 / 3 of 4 | 6.58e-03 |
-| CERS2 | De novo synthesis | -0.10 | -0.31 to +0.11 | 69% | 0 / 2 of 6 | 4.38e-01 |
-| CERS5 | De novo synthesis | -0.12 | -0.43 to +0.19 | 86% | 0 / 2 of 6 | 5.39e-01 |
-| CERS6 | De novo synthesis | +0.77 | +0.31 to +1.24 | 94% | 5 / 0 of 6 | 3.89e-03 |
-| ASAH1 | Ceramide catabolism | +0.90 | +0.29 to +1.52 | 96% | 4 / 0 of 6 | 1.17e-02 |
-| SGMS1 | Sphingomyelin cycle | +0.06 | -0.27 to +0.39 | 88% | 3 / 1 of 6 | 7.79e-01 |
-| SGMS2 | Sphingomyelin cycle | +0.06 | -0.12 to +0.24 | 58% | 0 / 0 of 6 | 5.89e-01 |
-| UGCG | Glycosphingolipid branch | +0.73 | +0.25 to +1.22 | 94% | 5 / 0 of 6 | 9.45e-03 |
-| SPHK1 | S1P axis | +0.00 | -0.26 to +0.26 | 80% | 1 / 2 of 6 | 9.78e-01 |
-| S1PR1 | S1P axis | +0.07 | -0.38 to +0.53 | 94% | 3 / 1 of 6 | 7.88e-01 |
+| IL2RB | Treg axis | -0.71 | -0.84 to -0.58 | 0% | 0 / 2 of 2 | 3.37e-24 |
+| CD68 | Microglia / myeloid activation | -0.61 | -0.74 to -0.48 | 0% | 0 / 2 of 2 | 1.03e-18 |
+| S1PR5 | S1P axis | -0.56 | -0.69 to -0.43 | 0% | 0 / 2 of 2 | 4.99e-16 |
+| S1PR4 | S1P axis | +0.50 | +0.37 to +0.63 | 0% | 2 / 0 of 2 | 6.04e-13 |
+| S1PR3 | S1P axis | +0.47 | +0.34 to +0.60 | 0% | 2 / 0 of 2 | 1.68e-11 |
+| IFNGR1 | Cytokine SMase triggers | +0.79 | +0.56 to +1.02 | 63% | 2 / 0 of 2 | 2.28e-10 |
+| TYROBP | Microglia / myeloid activation | +0.43 | +0.30 to +0.56 | 0% | 2 / 0 of 2 | 6.60e-10 |
+| GPX4 | Antioxidant / 4-HNE defence | +0.39 | +0.26 to +0.52 | 0% | 2 / 0 of 2 | 3.09e-08 |
+| SMPD3 | Sphingomyelin cycle | -0.33 | -0.46 to -0.21 | 0% | 0 / 2 of 2 | 2.57e-06 |
+| IKZF2 | Treg axis | -0.27 | -0.40 to -0.15 | 0% | 0 / 1 of 2 | 1.73e-04 |
+| SPTLC1 | De novo synthesis | -0.53 | -0.79 to -0.28 | 70% | 0 / 2 of 2 | 1.73e-04 |
+| LPCAT3 | Lipid peroxidation drivers | -0.26 | -0.38 to -0.13 | 0% | 0 / 1 of 2 | 5.09e-04 |
+| HEXB | Glycosphingolipid branch | +0.53 | +0.22 to +0.83 | 80% | 2 / 0 of 2 | 4.09e-03 |
+| IL1B | Cytokine SMase triggers | +0.22 | +0.09 to +0.34 | 0% | 1 / 0 of 2 | 4.58e-03 |
+| CERT1 | Ceramide transport | +0.40 | +0.15 to +0.65 | 69% | 1 / 0 of 2 | 7.12e-03 |
+| SMPD1 | Sphingomyelin cycle | -0.11 | -0.65 to +0.43 | 94% | 0 / 1 of 2 | 8.25e-01 |
+| SMPD2 | Sphingomyelin cycle | +0.10 | -0.03 to +0.23 | 0% | 0 / 0 of 2 | 2.89e-01 |
+| CERS2 | De novo synthesis | -0.13 | -0.50 to +0.24 | 86% | 0 / 1 of 2 | 7.52e-01 |
+| CERS5 | De novo synthesis | +0.14 | +0.01 to +0.26 | 0% | 0 / 0 of 2 | 1.21e-01 |
+| CERS6 | De novo synthesis | +0.15 | -0.05 to +0.34 | 52% | 1 / 0 of 2 | 3.13e-01 |
+| ASAH1 | Ceramide catabolism | +0.03 | -0.10 to +0.16 | 0% | 0 / 0 of 2 | 8.20e-01 |
+| SGMS1 | Sphingomyelin cycle | +0.11 | -0.37 to +0.58 | 92% | 1 / 0 of 2 | 8.20e-01 |
+| SGMS2 | Sphingomyelin cycle | +0.03 | -0.10 to +0.16 | 0% | 0 / 0 of 2 | 8.20e-01 |
+| UGCG | Glycosphingolipid branch | +0.03 | -0.44 to +0.50 | 91% | 1 / 0 of 2 | 9.20e-01 |
+| SPHK1 | S1P axis | -0.00 | -0.42 to +0.41 | 89% | 0 / 1 of 2 | 9.85e-01 |
+| S1PR1 | S1P axis | -0.17 | -1.17 to +0.83 | 98% | 1 / 1 of 2 | 8.46e-01 |
+
+## ALS CNS vs control: random-effects meta-analysis
+
+![meta](figures/pathway_meta_ALS_CNS.png)
+
+| Gene | Module | meta g | 95% CI | I² | strata up / down (FDR<0.05) | FDR |
+|---|---|---:|---|---:|---|---:|
+| UGCG | Glycosphingolipid branch | +1.10 | +0.92 to +1.29 | 0% | 4 / 0 of 4 | 1.98e-29 |
+| CERT1 | Ceramide transport | +1.00 | +0.81 to +1.18 | 0% | 4 / 0 of 4 | 9.93e-25 |
+| SPHK2 | S1P axis | -1.03 | -1.24 to -0.83 | 17% | 0 / 4 of 4 | 1.04e-21 |
+| SGPP1 | S1P axis | +0.90 | +0.72 to +1.08 | 0% | 4 / 0 of 4 | 9.61e-21 |
+| SMPD4 | Sphingomyelin cycle | -0.88 | -1.07 to -0.70 | 0% | 0 / 3 of 4 | 4.22e-20 |
+| ALOX12 | Lipid peroxidation drivers | -0.85 | -1.03 to -0.66 | 6% | 0 / 3 of 4 | 2.06e-17 |
+| DEGS1 | De novo synthesis | +0.80 | +0.62 to +0.98 | 0% | 4 / 0 of 4 | 7.35e-17 |
+| IL10 | Treg axis | +1.11 | +0.86 to +1.36 | 0% | 2 / 0 of 2 | 8.31e-17 |
+| KDSR | De novo synthesis | +0.78 | +0.60 to +0.96 | 0% | 4 / 0 of 4 | 4.26e-16 |
+| DEGS2 | De novo synthesis | -0.75 | -0.94 to -0.57 | 0% | 0 / 3 of 4 | 2.71e-15 |
+| SPTLC1 | De novo synthesis | +0.75 | +0.57 to +0.93 | 0% | 4 / 0 of 4 | 3.34e-15 |
+| CERS4 | De novo synthesis | -0.73 | -0.91 to -0.55 | 0% | 0 / 3 of 4 | 2.00e-14 |
+| SMPD3 | Sphingomyelin cycle | -0.70 | -0.88 to -0.52 | 0% | 0 / 4 of 4 | 2.41e-13 |
+| GLA | Glycosphingolipid branch | +0.82 | +0.60 to +1.04 | 30% | 4 / 0 of 4 | 1.68e-12 |
+| IFNGR1 | Cytokine SMase triggers | +0.63 | +0.45 to +0.81 | 0% | 4 / 0 of 4 | 3.19e-11 |
+| SMPD1 | Sphingomyelin cycle | -0.22 | -0.40 to -0.05 | 0% | 0 / 0 of 4 | 2.69e-02 |
+| SMPD2 | Sphingomyelin cycle | -0.30 | -0.53 to -0.07 | 37% | 0 / 1 of 4 | 2.12e-02 |
+| CERS1 | De novo synthesis | -0.58 | -0.95 to -0.21 | 75% | 0 / 3 of 4 | 4.83e-03 |
+| CERS2 | De novo synthesis | -0.07 | -0.39 to +0.24 | 67% | 0 / 1 of 4 | 6.97e-01 |
+| CERS5 | De novo synthesis | -0.27 | -0.71 to +0.16 | 82% | 0 / 2 of 4 | 3.01e-01 |
+| CERS6 | De novo synthesis | +1.13 | +0.79 to +1.47 | 68% | 4 / 0 of 4 | 2.79e-10 |
+| ASAH1 | Ceramide catabolism | +1.36 | +0.97 to +1.75 | 75% | 4 / 0 of 4 | 3.33e-11 |
+| SGMS1 | Sphingomyelin cycle | +0.04 | -0.52 to +0.60 | 89% | 2 / 1 of 4 | 9.07e-01 |
+| SGMS2 | Sphingomyelin cycle | +0.09 | -0.27 to +0.44 | 74% | 0 / 0 of 4 | 6.90e-01 |
+| SPHK1 | S1P axis | -0.00 | -0.41 to +0.41 | 80% | 1 / 1 of 4 | 9.94e-01 |
+| S1PR1 | S1P axis | +0.21 | -0.32 to +0.73 | 88% | 2 / 0 of 4 | 5.19e-01 |
+| GPX4 | Antioxidant / 4-HNE defence | +0.45 | +0.10 to +0.80 | 73% | 3 / 0 of 4 | 2.62e-02 |
+| ACSL4 | Lipid peroxidation drivers | +0.85 | +0.56 to +1.14 | 58% | 4 / 0 of 4 | 2.48e-08 |
 
 ## Module scores (Hedges' g, case vs control)
 

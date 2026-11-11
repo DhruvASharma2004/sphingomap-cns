@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+.pytest_cache/
+.ruff_cache/
+.DS_Store
+
+# downloaded raw data (large; re-created by `sphingomap-cns atlas`)
+data/
+results/demo/
+results/run/

@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sphingomap-cns"
+version = "0.1.0"
+description = "Sphingolipid, ceramide and lipid-peroxidation pathway atlas for ALS, FTD and AD transcriptomes and proteomics"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Dhruv Sharma" }]
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24", "pandas>=2.0", "scipy>=1.10", "matplotlib>=3.7"]
+keywords = ["bioinformatics", "sphingolipids", "ceramide", "ALS", "FTD", "Alzheimer", "neuroinflammation", "GEO"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "ruff>=0.4"]
+
+[project.scripts]
+sphingomap-cns = "sphingomap_cns.cli:main"
+
+[tool.setuptools]
+packages = ["sphingomap_cns"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E402"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501"]
+"sphingomap_cns/report.py" = ["E501"]  # embedded HTML/JS template

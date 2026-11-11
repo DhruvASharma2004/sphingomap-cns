@@ -11,6 +11,7 @@ from sphingomap_cns.design import (
     assign_strata,
     ensure_log2,
     log_cpm,
+    one_per_subject,
     parse_covariates,
     usable_covariates,
 )
@@ -37,8 +38,11 @@ from sphingomap_cns.stats import (
 SERIES = """!Series_title\t"Test"
 !Sample_title\t"ALS_1"\t"CTRL_1"\t"ALS_2"\t"OND_1"
 !Sample_geo_accession\t"GSM1"\t"GSM2"\t"GSM3"\t"GSM4"
-!Sample_source_name_ch1\t"Spinal Cord"\t"Spinal Cord"\t"Motor Cortex"\t"Motor Cortex"
-!Sample_characteristics_ch1\t"subject group: ALS Spectrum MND"\t"subject group: Non-Neurological Control"\t"subject group: ALS Spectrum MND"\t"subject group: Other Neurological Disorders"
+!Sample_source_name_ch1\t"Spinal Cord Cervical"\t"Spinal Cord Cervical"\t"Cortex Motor Lateral"\t"Cortex Motor Lateral"
+!Sample_characteristics_ch1\t"project: NYGC ALS Consortium"\t"project: NYGC ALS Consortium"\t"project: NYGC ALS Consortium"\t"project: NYGC ALS Consortium"
+!Sample_characteristics_ch1\t"tissue: Spinal Cord Cervical"\t"tissue: Spinal Cord Cervical"\t"tissue: Cortex Motor Lateral"\t"tissue: Cortex Motor Lateral"
+!Sample_characteristics_ch1\t"subject id: S1"\t"subject id: S2"\t"subject id: S1"\t"subject id: S3"
+!Sample_characteristics_ch1\t"group: ALS Spectrum MND"\t"group: Non-Neurological Control"\t"group: ALS Spectrum MND"\t"group: ALS Spectrum MND, Other Neurological Disorders"
 !Sample_characteristics_ch1\t"sex: Male"\t"sex: Female"\t"sex: Female"\t"sex: Male"
 !Sample_characteristics_ch1\t"age at death: 61"\t"age at death: 70"\t"age at death: 55 years"\t"age at death: 80"
 !Sample_platform_id\t"GPL1"\t"GPL1"\t"GPL1"\t"GPL1"
@@ -108,8 +112,8 @@ def test_stub():
 def test_parse_series_matrix(series_file):
     ann, expr = geo.parse_series_matrix(series_file)
     assert list(ann.index) == ["GSM1", "GSM2", "GSM3", "GSM4"]
-    assert ann.loc["GSM2", "subject group"] == "Non-Neurological Control"
-    assert ann.loc["GSM3", "source"] == "Motor Cortex"
+    assert ann.loc["GSM2", "group"] == "Non-Neurological Control"
+    assert ann.loc["GSM3", "source"] == "Cortex Motor Lateral"
     assert expr.shape == (4, 4) and expr.loc["p3", "GSM1"] == 1000
 
 
@@ -142,11 +146,15 @@ def test_grouping_and_covariates(series_file):
     ann, _ = geo.parse_series_matrix(series_file)
     cfg = COHORTS["GSE153960"]
     case, ctrl = cfg["contrasts"]["ALS"]
-    g = assign_groups(ann, case, ctrl, cfg["exclude"])
-    assert g.to_dict() == {"GSM1": "Case", "GSM2": "Control", "GSM3": "Case", "GSM4": np.nan} or \
-        (g["GSM1"] == "Case" and g["GSM2"] == "Control" and pd.isna(g["GSM4"]))
-    st = assign_strata(ann, cfg["strata"])
-    assert st["GSM1"] == "Spinal cord" and st["GSM3"] == "Motor cortex"
+    g = assign_groups(ann, case, ctrl, cfg.get("exclude"), cfg["group_field"])
+    assert g["GSM1"] == "Case" and g["GSM2"] == "Control" and g["GSM3"] == "Case"
+    assert pd.isna(g["GSM4"])  # ALS + other neurological diagnosis left out
+    # matching over all fields would make every sample 'ALS' via the project name
+    g_all = assign_groups(ann, r"\bALS\b", r"Non-Neurological Control")
+    assert pd.isna(g_all["GSM2"])
+    st = assign_strata(ann, cfg["strata"], cfg["strata_field"])
+    assert st["GSM1"] == "Spinal cord (cervical)" and st["GSM3"] == "Motor cortex (lateral)"
+    assert list(one_per_subject(pd.Index(["GSM1", "GSM2", "GSM3"]), ann, "subject id")) == ["GSM1", "GSM2"]
     cov = parse_covariates(ann)
     assert list(cov["sex_male"]) == [1, 0, 0, 1] and list(cov["age"]) == [61, 70, 55, 80]
     assert set(usable_covariates(cov, ann.index).columns) == {"sex_male", "age"}
@@ -262,3 +270,23 @@ def test_pseudobulk(tmp_path):
     e = pd.read_csv(tmp_path / "pb_expression.tsv", sep="\t", index_col=0)
     s = pd.read_csv(tmp_path / "pb_samples.csv")
     assert e.shape == (2, 4) and set(s.cell_type) == {"Treg", "Mono"} and set(s.timepoint) == {"Baseline", "Week24"}
+
+
+def test_download_rejects_html(tmp_path, monkeypatch):
+    import io as _io
+    import urllib.request
+
+    class R(_io.BytesIO):
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+    monkeypatch.setattr(urllib.request, "urlopen", lambda *a, **k: R(b"<!DOCTYPE html><html>nope</html>"))
+    with pytest.raises(OSError, match="HTML"):
+        geo.download("https://example.org/x.gz", tmp_path / "x.gz")
+    assert not (tmp_path / "x.gz").exists()
+    (tmp_path / "y.gz").write_bytes(b"<!DOCTYPE html>")  # poisoned cache entry gets re-fetched
+    with pytest.raises(OSError):
+        geo.download("https://example.org/y.gz", tmp_path / "y.gz")

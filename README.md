@@ -67,12 +67,12 @@ Actions workflow (Actions tab → *Run workflow*) runs the same commands on GitH
 
 | Cohort | Disease | Compartment | Platform | Strata |
 |---|---|---|---|---|
-| GSE153960 (NYGC ALS Consortium) | ALS, FTD | CNS | RNA-seq | spinal cord, motor cortex, frontal cortex |
+| GSE153960 (NYGC ALS Consortium / Target ALS) | ALS | CNS | RNA-seq | cervical + lumbar spinal cord, lateral motor cortex, frontal cortex (one sample per donor per tissue) |
 | GSE5281 (Liang et al. 2007) | AD | CNS (laser-captured neurons) | Affymetrix U133 Plus 2 | 6 brain regions |
 | GSE112676 / GSE112680 (van Rheenen et al. 2018) | ALS | Whole blood | Illumina HT-12 | – |
 | GSE124439 (Tam et al. 2019), optional | ALS | CNS | RNA-seq | motor / frontal cortex (left out of the meta-analysis because it likely overlaps GSE153960) |
 
-To add a cohort, add an entry to [`sphingomap_cns/registry.py`](sphingomap_cns/registry.py) and check it with `inspect`.
+GSE153960's GEO labels have no separate FTD group (FTLD cases are filed under "Other Neurological Disorders"), so no public FTD comparison is registered yet. FTD data can be analysed with `run`. To add a cohort, add an entry to [`sphingomap_cns/registry.py`](sphingomap_cns/registry.py) and check it with `inspect`.
 
 ### Your own data (bulk, proteomics, or pseudobulked single-cell)
 

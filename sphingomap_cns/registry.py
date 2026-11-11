@@ -17,6 +17,9 @@ Fields
 ------
 platform      "rnaseq" (NCBI-generated raw counts) or "array" (series matrix + GPL annotation)
 contrasts     {name: (case_pattern, control_pattern)}; samples matching neither are dropped
+group_field   annotation column the contrast patterns are matched against (default: all values)
+strata_field  annotation column the strata patterns are matched against (default: all values)
+subject_field donor/patient ID column; keeps one sample per donor within each stratum
 exclude       pattern; matching samples are removed before grouping
 strata        {label: pattern}; one analysis per stratum (tissue / region). Samples
               matching no stratum are dropped. Omit for a single stratum.
@@ -29,20 +32,26 @@ CONTROL = r"control|healthy|normal|\bCON\b|\bCTRL\b|\bHC\b"
 
 COHORTS: dict[str, dict] = {
     "GSE153960": {
-        "title": "NYGC ALS Consortium post-mortem CNS RNA-seq (ALS, FTD, controls)",
+        "title": "NYGC ALS Consortium / Target ALS post-mortem CNS RNA-seq",
         "reference": "New York Genome Center ALS Consortium (GEO GSE153960)",
         "platform": "rnaseq",
         "compartment": "CNS",
-        "contrasts": {
-            "ALS": (r"\bALS\b|ALS[ -]Spectrum|\bMND\b|amyotrophic", r"Non-?Neurological Control"),
-            "FTD": (r"\bFTLD\b|\bFTD\b|frontotemporal", r"Non-?Neurological Control"),
-        },
-        "exclude": r"Other Neurological",
+        # GEO 'group' values: 'ALS Spectrum MND', 'Non-Neurological Control',
+        # 'ALS Spectrum MND, Other Neurological Disorders', 'Other Neurological Disorders', ...
+        # There is no separate FTD label (FTLD cases fall under 'Other Neurological
+        # Disorders'), so only ALS vs control is analysed. ALS with a second
+        # neurological diagnosis is left out to keep the case group clean.
+        "group_field": "group",
+        "contrasts": {"ALS": (r"^ALS Spectrum MND$", r"^Non-Neurological Control$")},
+        "strata_field": "tissue",
         "strata": {
-            "Spinal cord": r"spinal",
-            "Motor cortex": r"motor cortex",
-            "Frontal cortex": r"frontal cortex",
+            "Spinal cord (cervical)": r"^Spinal Cord Cervical$",
+            "Spinal cord (lumbar)": r"^Spinal Cord Lumbar$",
+            "Motor cortex (lateral)": r"^Cortex Motor Lateral$",
+            "Frontal cortex": r"^Cortex Frontal$",
         },
+        # Several tissues (and some repeat libraries) per donor: keep one sample per donor per tissue.
+        "subject_field": "subject id",
         "default": True,
     },
     "GSE124439": {
@@ -63,7 +72,8 @@ COHORTS: dict[str, dict] = {
         "platform": "array",
         "gpl": "GPL570",
         "compartment": "CNS",
-        "contrasts": {"AD": (r"alzheimer", r"\bnormal\b|control")},
+        "group_field": "disease state",
+        "contrasts": {"AD": (r"alzheimer", r"^normal$")},
         "strata": {
             "Entorhinal cortex": r"entorhinal",
             "Hippocampus": r"hippocamp",
@@ -80,7 +90,8 @@ COHORTS: dict[str, dict] = {
         "platform": "array",
         "gpl": "GPL6947",
         "compartment": "Blood",
-        "contrasts": {"ALS": (r"\bALS\b|amyotrophic", CONTROL)},
+        "group_field": "diagnosis",
+        "contrasts": {"ALS": (r"^ALS$", r"^CON$")},
         "default": True,
     },
     "GSE112680": {
@@ -89,9 +100,9 @@ COHORTS: dict[str, dict] = {
         "platform": "array",
         "gpl": "GPL10558",
         "compartment": "Blood",
-        "contrasts": {"ALS": (r"\bALS\b|amyotrophic", CONTROL)},
-        # The replication set also contains ALS-mimic patients; exclude them.
-        "exclude": r"mimic",
+        # diagnosis values: ALS, CON, MIM (ALS mimics; left unassigned).
+        "group_field": "diagnosis",
+        "contrasts": {"ALS": (r"^ALS$", r"^CON$")},
         "default": True,
     },
 }

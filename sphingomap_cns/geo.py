@@ -26,7 +26,7 @@ from .genesets import ALIASES
 
 FTP = "https://ftp.ncbi.nlm.nih.gov/geo"
 GEO_DL = "https://www.ncbi.nlm.nih.gov/geo/download/"
-NCBI_ANNOT = "Human.GRCh38.p13.annot.tsv.gz"
+GENE_INFO = "https://ftp.ncbi.nlm.nih.gov/gene/DATA/GENE_INFO/Mammalia/Homo_sapiens.gene_info.gz"
 UA = {"User-Agent": "sphingomap-cns (+https://github.com/DhruvASharma2004)"}
 
 
@@ -40,12 +40,22 @@ def _stub(acc: str) -> str:
 def download(url: str, dest: Path, overwrite: bool = False) -> Path:
     dest = Path(dest)
     if dest.exists() and dest.stat().st_size > 0 and not overwrite:
-        return dest
+        with open(dest, "rb") as fh:
+            ok = not dest.name.endswith(".gz") or fh.read(2) == b"\x1f\x8b"
+        if ok:
+            return dest
+        dest.unlink()  # cached error page from an earlier run
     dest.parent.mkdir(parents=True, exist_ok=True)
     tmp = dest.with_name(dest.name + ".part")
     req = urllib.request.Request(url, headers=UA)
     with urllib.request.urlopen(req, timeout=600) as r, open(tmp, "wb") as fh:
         shutil.copyfileobj(r, fh)
+    with open(tmp, "rb") as fh:
+        head = fh.read(512)
+    if dest.name.endswith(".gz") and head[:2] != b"\x1f\x8b":
+        tmp.unlink()
+        hint = " (got an HTML page - file not offered or blocked)" if head.lstrip()[:1] == b"<" else ""
+        raise OSError(f"Expected a gzip file from {url}{hint}")
     tmp.rename(dest)
     return dest
 
@@ -71,8 +81,7 @@ def fetch_series(gse: str, datadir: str | Path, platform: str, gpl: str | None =
     if platform == "rnaseq":
         fname = f"{gse}_raw_counts_GRCh38.p13_NCBI.tsv.gz"
         out["counts"] = download(f"{GEO_DL}?type=rnaseq_counts&acc={gse}&format=file&file={fname}", d / fname)
-        out["gene_annot"] = download(f"{GEO_DL}?type=rnaseq_counts&format=file&file={NCBI_ANNOT}",
-                                     Path(datadir) / NCBI_ANNOT)
+        out["gene_info"] = download(GENE_INFO, Path(datadir) / "Homo_sapiens.gene_info.gz")
     elif gpl:
         out["platform"] = fetch_platform(gpl, datadir)
     return out
@@ -224,14 +233,21 @@ def probes_to_genes(expr: pd.DataFrame, probe_map: pd.Series) -> pd.DataFrame:
     return e.set_index("__sym").drop(columns="__mean").rename_axis("gene")
 
 
-def load_ncbi_counts(counts_path: str | Path, annot_path: str | Path) -> pd.DataFrame:
-    """NCBI-generated raw counts (GeneID x GSM) -> symbol-indexed counts."""
+def load_ncbi_counts(counts_path: str | Path, gene_info_path: str | Path) -> pd.DataFrame:
+    """NCBI-generated raw counts (Entrez GeneID x GSM) -> symbol-indexed counts.
+
+    ``gene_info_path`` is NCBI's Homo_sapiens.gene_info(.gz) (GeneID in column 2, Symbol in column 3)
+    or any tab-separated table whose first two columns are GeneID and Symbol.
+    """
     counts = pd.read_csv(counts_path, sep="\t", index_col=0)
-    annot = pd.read_csv(annot_path, sep="\t", index_col=0, usecols=[0, 1], dtype={0: str})
-    sym = annot.iloc[:, 0].astype(str)
+    info = pd.read_csv(gene_info_path, sep="\t", dtype=str, low_memory=False)
+    if {"GeneID", "Symbol"} <= set(info.columns):
+        sym = info.set_index("GeneID")["Symbol"]
+    else:
+        sym = info.set_index(info.columns[0])[info.columns[1]]
     sym.index = sym.index.astype(str)
     counts.index = counts.index.astype(str)
     counts = counts.loc[counts.index.intersection(sym.index)]
     counts.index = sym.loc[counts.index].values
-    counts = counts.rename(index=lambda g: ALIASES.get(g.upper(), g.upper()))
+    counts = counts.rename(index=lambda g: ALIASES.get(str(g).upper(), str(g).upper()))
     return counts.groupby(level=0).sum().rename_axis("gene")

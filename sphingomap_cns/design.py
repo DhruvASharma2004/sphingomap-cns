@@ -41,32 +41,38 @@ def expressed_genes(expr: pd.DataFrame, platform: str) -> pd.Index:
 # ----------------------------------------------------------------------------- grouping
 
 
-def _values_text(ann: pd.DataFrame) -> pd.Series:
-    """One lowercase string per sample made of annotation *values* (not keys)."""
+def _values_text(ann: pd.DataFrame, field: str | None = None) -> pd.Series:
+    """Text to match per sample: one annotation column if ``field`` is given, else all values joined."""
+    if field:
+        cols = {c.lower(): c for c in ann.columns}
+        if field.lower() not in cols:
+            raise KeyError(f"Annotation column '{field}' not found; have: {list(ann.columns)}")
+        return ann[cols[field.lower()]].astype(str).str.strip()
     return ann.astype(str).agg(" | ".join, axis=1)
 
 
-def assign_groups(ann: pd.DataFrame, case: str, control: str, exclude: str | None = None) -> pd.Series:
+def assign_groups(ann: pd.DataFrame, case: str, control: str, exclude: str | None = None,
+                  field: str | None = None) -> pd.Series:
     """Label each sample Case / Control / NaN by regex over its annotation values.
 
     Samples matching both patterns are ambiguous and dropped.
     """
-    text = _values_text(ann)
+    text = _values_text(ann, field)
     is_case = text.str.contains(case, flags=re.I, regex=True)
     is_ctrl = text.str.contains(control, flags=re.I, regex=True)
     g = pd.Series(np.nan, index=ann.index, dtype=object)
     g[is_case & ~is_ctrl] = "Case"
     g[is_ctrl & ~is_case] = "Control"
     if exclude:
-        g[text.str.contains(exclude, flags=re.I, regex=True)] = np.nan
+        g[_values_text(ann).str.contains(exclude, flags=re.I, regex=True)] = np.nan
     return g
 
 
-def assign_strata(ann: pd.DataFrame, strata: dict[str, str] | None) -> pd.Series:
+def assign_strata(ann: pd.DataFrame, strata: dict[str, str] | None, field: str | None = None) -> pd.Series:
     """First matching stratum label per sample (NaN if none match)."""
     if not strata:
         return pd.Series("All", index=ann.index)
-    text = _values_text(ann)
+    text = _values_text(ann, field)
     out = pd.Series(np.nan, index=ann.index, dtype=object)
     for label, pat in strata.items():
         hit = text.str.contains(pat, flags=re.I, regex=True) & out.isna()
@@ -103,3 +109,15 @@ def usable_covariates(cov: pd.DataFrame, samples: pd.Index, min_coverage: float 
     keep = [k for k in c.columns if c[k].notna().mean() >= min_coverage and c[k].nunique() > 1]
     c = c[keep]
     return c.fillna(c.mean())
+
+
+def one_per_subject(samples: pd.Index, ann: pd.DataFrame, field: str | None) -> pd.Index:
+    """Keep the first sample of each donor (avoids counting repeat libraries / regions twice)."""
+    if not field:
+        return samples
+    cols = {c.lower(): c for c in ann.columns}
+    col = cols.get(field.lower())
+    if col is None:
+        return samples
+    subj = ann.loc[samples, col].astype(str)
+    return pd.Index(subj[~subj.duplicated()].index)

@@ -29,14 +29,14 @@ jobs:
         uses: actions/cache@v4
         with:
           path: data/raw
-          key: geo-${{ hashFiles('sphingomap_cns/registry.py') }}
-          restore-keys: geo-
+          key: geo-v2-${{ hashFiles('sphingomap_cns/registry.py') }}
+          restore-keys: geo-v2-
       - name: Inspect sample annotations (audit trail for group assignment)
         continue-on-error: true
         env:
           COHORTS: ${{ github.event.inputs.cohorts }}
         run: |
-          mkdir -p results/atlas
+          rm -rf results/atlas && mkdir -p results/atlas
           for c in ${COHORTS:-GSE153960 GSE5281 GSE112676 GSE112680}; do
             echo "::group::$c"
             sphingomap-cns inspect "$c" --datadir data/raw | tee "results/atlas/INSPECT_$c.txt"

@@ -15,6 +15,7 @@ from .design import (
     ensure_log2,
     expressed_genes,
     log_cpm,
+    one_per_subject,
     parse_covariates,
     usable_covariates,
 )
@@ -31,8 +32,10 @@ def prepare_cohort(cid: str, datadir: str | Path, cfg: dict | None = None) -> di
     files = geo.fetch_series(cid, datadir, cfg["platform"], cfg.get("gpl"))
     ann, table = geo.load_series(files["series_matrix"])
     if cfg["platform"] == "rnaseq":
-        counts = geo.load_ncbi_counts(files["counts"], files["gene_annot"])
+        counts = geo.load_ncbi_counts(files["counts"], files["gene_info"])
         counts = counts.loc[:, counts.columns.intersection(ann.index)]
+        if counts.shape[1] == 0:
+            raise ValueError("NCBI count matrix columns do not match the series-matrix GSM IDs")
         expr, transformed = log_cpm(counts), "log2 CPM (NCBI raw counts)"
     else:
         expr = geo.probes_to_genes(table, geo.parse_platform(files["platform"]))
@@ -46,13 +49,14 @@ def analyse_cohort(cid: str, data: dict, cfg: dict, outdir: Path) -> list[dict]:
     """Run every contrast x stratum for one cohort; returns one record per comparison."""
     expr, ann = data["expr"], data["ann"]
     covs = parse_covariates(ann)
-    strata = assign_strata(ann, cfg.get("strata"))
+    strata = assign_strata(ann, cfg.get("strata"), cfg.get("strata_field"))
     records = []
     for contrast, (case_pat, ctrl_pat) in cfg["contrasts"].items():
-        groups_all = assign_groups(ann, case_pat, ctrl_pat, cfg.get("exclude"))
+        groups_all = assign_groups(ann, case_pat, ctrl_pat, cfg.get("exclude"), cfg.get("group_field"))
         for stratum in [s for s in (cfg.get("strata") or {"All": None})]:
             idx = strata[strata == stratum].index
             g = groups_all.loc[idx].dropna()
+            g = g.loc[one_per_subject(g.index, ann, cfg.get("subject_field"))]
             label = f"{cid} {contrast}" + ("" if stratum == "All" else f" - {stratum}")
             sub = outdir / cid / slug(f"{contrast}_{stratum}")
             if (g == "Case").sum() < 3 or (g == "Control").sum() < 3:

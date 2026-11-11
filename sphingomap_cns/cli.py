@@ -135,10 +135,10 @@ def _inspect(cid: str, datadir: str) -> None:
         for v, n in vc.items():
             print(f"    {n:>5}  {v}")
     if cfg:
-        strata = assign_strata(ann, cfg.get("strata"))
+        strata = assign_strata(ann, cfg.get("strata"), cfg.get("strata_field"))
         print("\nGroup assignment with the registry patterns (Case/Control x stratum):")
         for contrast, (case, ctrl) in cfg["contrasts"].items():
-            g = assign_groups(ann, case, ctrl, cfg.get("exclude")).fillna("unassigned")
+            g = assign_groups(ann, case, ctrl, cfg.get("exclude"), cfg.get("group_field")).fillna("unassigned")
             print(f"\n  {contrast}:")
             print(pd_crosstab(strata.fillna("no stratum"), g))
     else:

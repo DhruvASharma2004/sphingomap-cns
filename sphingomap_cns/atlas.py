@@ -109,9 +109,11 @@ def synthesize(records: list[dict], outdir: Path, title: str = "sphingomap-CNS a
     SG.to_csv(outdir / "atlas_score_hedges_g.csv")
 
     # Meta-analysis per contrast (disease) across strata.
+    # Meta-analysis per disease *and* compartment (CNS and blood biology are not pooled).
     metas = {}
-    for contrast in dict.fromkeys(r["contrast"] for r in order):
-        cs = [col[id(r)] for r in order if r["contrast"] == contrast]
+    keyof = {id(r): f"{r['contrast']} {r.get('compartment') or ''}".strip() for r in order}
+    for contrast in dict.fromkeys(keyof.values()):
+        cs = [col[id(r)] for r in order if keyof[id(r)] == contrast]
         if len(cs) < 2:
             continue
         m = random_effects_meta(G[cs], V[cs])

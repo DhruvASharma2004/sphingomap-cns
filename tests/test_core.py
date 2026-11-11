@@ -238,10 +238,10 @@ def test_demo_end_to_end(tmp_path):
     assert main(["demo", "-o", str(tmp_path)]) == 0
     atlas = tmp_path / "atlas"
     for f in ("ATLAS_REPORT.md", "atlas.html", "atlas_meta_analysis.csv", "figures/atlas_genes.png",
-              "figures/pathway_meta_ALS.png"):
+              "figures/pathway_meta_ALS_CNS.png"):
         assert (atlas / f).exists(), f
     meta = pd.read_csv(atlas / "atlas_meta_analysis.csv", index_col=0)
-    als = meta[meta.contrast == "ALS"]
+    als = meta[meta.contrast == "ALS CNS"]
     # planted effects are recovered in the right direction
     assert als.loc["SMPD1", "g_meta"] > 0.3 and als.loc["SMPD1", "fdr"] < 0.05
     assert als.loc["NEFL", "g_meta"] < -0.5

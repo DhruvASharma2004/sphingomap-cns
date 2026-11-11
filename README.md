@@ -116,7 +116,8 @@ protein). Counts (`--counts`), linear intensities (log2-transformed automaticall
   Samples that match both patterns, or an `exclude` pattern (e.g. "Other Neurological Disorders"), are dropped.
   Every run writes `sample_groups.csv`.
 - **Model:** `expression ~ group + sex + age` (covariates are used when ≥ 90% of samples are annotated); `log2FC` is the adjusted
-  coefficient. Hedges' *g* (unadjusted) feeds the meta-analysis.
+  coefficient. The standardised effect (Hedges' *g*, covariate-adjusted when covariates are used) feeds the meta-analysis.
+- **Cell-composition sensitivity:** `atlas --adjust microglia_myeloid` adds each sample's microglia/myeloid score as a covariate, so gene effects are estimated at equal microglial burden (`results/atlas_microglia_adjusted/`).
 - **Scores:** each gene is z-scored against the controls (or the reference timepoint), then averaged within a module. +1 means
   "one control SD above the control mean on average".
 - **Meta-analysis:** DerSimonian-Laird across the strata of one disease. Brain regions from the same donors are not

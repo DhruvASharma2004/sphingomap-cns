@@ -299,3 +299,16 @@ def test_microglia_adjustment(tmp_path):
     build_atlas(["SIM-CNS-3"], None, tmp_path, prepared=prepared, registry=registry, adjust=["microglia_myeloid"])
     runs = pd.read_csv(tmp_path / "atlas_runs.csv")
     assert "microglia_myeloid_score" in runs.loc[0, "covariates"]
+
+
+def test_adjusted_effect_size_changes_with_confounder():
+    rng = np.random.default_rng(4)
+    n = 40
+    conf = np.r_[rng.normal(1, 0.3, n), rng.normal(0, 0.3, n)]  # higher in cases
+    y = 8 + 1.5 * conf + rng.normal(0, 0.3, 2 * n)  # gene driven only by the confounder
+    cols = [f"s{i}" for i in range(2 * n)]
+    expr = pd.DataFrame([y], index=["UGCG"], columns=cols)
+    groups = pd.Series(["Case"] * n + ["Control"] * n, index=cols)
+    raw = differential_expression(expr, groups)
+    adj = differential_expression(expr, groups, pd.DataFrame({"conf": conf}, index=cols))
+    assert raw.loc["UGCG", "hedges_g"] > 2 and abs(adj.loc["UGCG", "hedges_g"]) < 0.6

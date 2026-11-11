@@ -43,8 +43,10 @@ def differential_expression(expr: pd.DataFrame, groups: pd.Series, covariates: p
     """Case-vs-control linear model per gene: y ~ group (+ covariates).
 
     ``log2FC`` is the covariate-adjusted group coefficient on the log2 scale.
-    Without covariates this is Student's t-test. Hedges' g (unadjusted) and a
-    Mann-Whitney U p-value are reported alongside for robustness and meta-analysis.
+    Without covariates this is Student's t-test. ``hedges_g`` is the standardised
+    difference: plain Hedges' g without covariates, or the covariate-adjusted
+    equivalent (from the model t-statistic) when covariates are used; it feeds the
+    meta-analysis. A Mann-Whitney U p-value is reported alongside as a robustness check.
     """
     samples = groups[groups.isin([case, control])].index.intersection(expr.columns)
     g = groups.loc[samples]
@@ -81,7 +83,13 @@ def differential_expression(expr: pd.DataFrame, groups: pd.Series, covariates: p
         t = beta[1] / se if se > 0 else np.nan
         pval = 2 * stats.t.sf(abs(t), dof) if np.isfinite(t) else np.nan
         _, pmw = stats.mannwhitneyu(a, b, alternative="two-sided")
-        hg, hv = hedges_g(a, b)
+        if len(cov_names) and np.isfinite(t):
+            # covariate-adjusted standardised difference from the model t-statistic
+            n1, n2 = len(a), len(b)
+            hg = (1 - 3 / (4 * (n1 + n2) - 9)) * t * np.sqrt(1 / n1 + 1 / n2)
+            hv = (n1 + n2) / (n1 * n2) + hg ** 2 / (2 * (n1 + n2))
+        else:
+            hg, hv = hedges_g(a, b)
         rows.append((gene, beta[1], a.mean(), b.mean(), t, pval, pmw, hg, hv, len(a), len(b)))
     res = pd.DataFrame(rows, columns=["gene", "log2FC", "mean_case", "mean_control", "t", "p",
                                       "p_mannwhitney", "hedges_g", "g_var", "n_case", "n_control"]).set_index("gene")

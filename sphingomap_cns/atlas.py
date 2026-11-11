@@ -45,8 +45,12 @@ def prepare_cohort(cid: str, datadir: str | Path, cfg: dict | None = None) -> di
             "scale": transformed}
 
 
-def analyse_cohort(cid: str, data: dict, cfg: dict, outdir: Path) -> list[dict]:
-    """Run every contrast x stratum for one cohort; returns one record per comparison."""
+def analyse_cohort(cid: str, data: dict, cfg: dict, outdir: Path, adjust: list[str] | None = None) -> list[dict]:
+    """Run every contrast x stratum for one cohort; returns one record per comparison.
+
+    ``adjust`` names module scores (e.g. 'microglia_myeloid') added as per-sample covariates, so
+    gene effects are estimated at a fixed level of that cell signature (a composition adjustment).
+    """
     expr, ann = data["expr"], data["ann"]
     covs = parse_covariates(ann)
     strata = assign_strata(ann, cfg.get("strata"), cfg.get("strata_field"))
@@ -67,6 +71,12 @@ def analyse_cohort(cid: str, data: dict, cfg: dict, outdir: Path) -> list[dict]:
             keep = expressed_genes(e, data["platform"])
             e = e.loc[e.index.intersection(keep)]
             cov = usable_covariates(covs, g.index)
+            if adjust:
+                from .scores import module_scores
+                ms, _ = module_scores(e, reference=list(g[g == "Control"].index))
+                for a in adjust:
+                    if a in ms:
+                        cov[f"{a}_score"] = ms.loc[g.index, a]
             res = run_comparison(e, g, sub, label, covariates=cov, case_label=contrast,
                                  meta={"cohort": cid, "contrast": contrast, "stratum": stratum,
                                        "compartment": cfg.get("compartment", ""), "scale": data["scale"],
@@ -147,7 +157,8 @@ def synthesize(records: list[dict], outdir: Path, title: str = "sphingomap-CNS a
 
 
 def build_atlas(cohort_ids: list[str], datadir: str | Path, outdir: str | Path,
-                prepared: dict[str, dict] | None = None, registry: dict | None = None) -> dict:
+                prepared: dict[str, dict] | None = None, registry: dict | None = None,
+                adjust: list[str] | None = None) -> dict:
     """Fetch, analyse and synthesise. ``prepared``/``registry`` let tests and the demo skip GEO."""
     out = Path(outdir)
     out.mkdir(parents=True, exist_ok=True)
@@ -158,7 +169,7 @@ def build_atlas(cohort_ids: list[str], datadir: str | Path, outdir: str | Path,
         try:
             data = prepared[cid] if prepared and cid in prepared else prepare_cohort(cid, datadir, cfg)
             print(f"[{cid}] {data['expr'].shape[1]} samples, {data['expr'].shape[0]} genes ({data['scale']})")
-            records += analyse_cohort(cid, data, cfg, out)
+            records += analyse_cohort(cid, data, cfg, out, adjust)
         except Exception as exc:  # keep going; one broken cohort should not sink the atlas
             print(f"[{cid}] FAILED: {exc}")
             (out / cid).mkdir(parents=True, exist_ok=True)
@@ -167,7 +178,8 @@ def build_atlas(cohort_ids: list[str], datadir: str | Path, outdir: str | Path,
     for r in records:
         if r["status"] != "ok":
             print(f"  - {r['cohort']} {r['contrast']} {r['stratum']}: {r['status']} ({r.get('reason', '')})")
-    return synthesize(records, out)
+    title = "sphingomap-CNS atlas" + (f" (adjusted for {', '.join(adjust)})" if adjust else "")
+    return synthesize(records, out, title)
 
 
 def write_atlas_markdown(out: Path, runs: pd.DataFrame, metas: dict, SG: pd.DataFrame, SQ: pd.DataFrame):

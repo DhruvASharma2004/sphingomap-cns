@@ -290,3 +290,12 @@ def test_download_rejects_html(tmp_path, monkeypatch):
     (tmp_path / "y.gz").write_bytes(b"<!DOCTYPE html>")  # poisoned cache entry gets re-fetched
     with pytest.raises(OSError):
         geo.download("https://example.org/y.gz", tmp_path / "y.gz")
+
+
+def test_microglia_adjustment(tmp_path):
+    from sphingomap_cns.atlas import build_atlas
+    from sphingomap_cns.simulate import simulate_geo_cohorts
+    prepared, registry = simulate_geo_cohorts()
+    build_atlas(["SIM-CNS-3"], None, tmp_path, prepared=prepared, registry=registry, adjust=["microglia_myeloid"])
+    runs = pd.read_csv(tmp_path / "atlas_runs.csv")
+    assert "microglia_myeloid_score" in runs.loc[0, "covariates"]

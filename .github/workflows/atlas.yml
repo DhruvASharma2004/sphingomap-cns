@@ -46,15 +46,21 @@ jobs:
         env:
           COHORTS: ${{ github.event.inputs.cohorts }}
         run: sphingomap-cns atlas $COHORTS --datadir data/raw -o results/atlas
+      - name: Build microglia-adjusted atlas (cell-composition sensitivity analysis)
+        env:
+          COHORTS: ${{ github.event.inputs.cohorts }}
+        run: |
+          rm -rf results/atlas_microglia_adjusted
+          sphingomap-cns atlas $COHORTS --datadir data/raw -o results/atlas_microglia_adjusted --adjust microglia_myeloid
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: sphingomap-cns-atlas
-          path: results/atlas
+          path: results/
       - name: Commit results
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add results/atlas
+          git add results/atlas results/atlas_microglia_adjusted
           git diff --cached --quiet || git commit -m "Update GEO atlas results [skip ci]"
           git push

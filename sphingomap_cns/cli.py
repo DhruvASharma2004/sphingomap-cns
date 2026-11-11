@@ -38,6 +38,8 @@ def main(argv=None) -> int:
     a.add_argument("cohorts", nargs="*", help="GEO accessions (default: all default cohorts)")
     a.add_argument("--datadir", default="data/raw")
     a.add_argument("-o", "--outdir", default="results/atlas")
+    a.add_argument("--adjust", nargs="*", default=[], metavar="SCORE",
+                   help="module scores to use as covariates, e.g. microglia_myeloid (cell-composition adjustment)")
 
     r = sub.add_parser("run", help="analyse your own expression / proteomics table with a sample sheet")
     r.add_argument("-e", "--expression", required=True, help="features x samples table (first column = gene symbol)")
@@ -84,7 +86,7 @@ def main(argv=None) -> int:
     elif args.cmd == "atlas":
         from .atlas import build_atlas
         from .registry import default_cohorts
-        build_atlas(args.cohorts or default_cohorts(), args.datadir, args.outdir)
+        build_atlas(args.cohorts or default_cohorts(), args.datadir, args.outdir, adjust=args.adjust)
         print(f"Atlas written to {args.outdir}/ATLAS_REPORT.md and {args.outdir}/atlas.html")
     elif args.cmd == "run":
         from .userdata import run_user

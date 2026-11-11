@@ -160,7 +160,8 @@ tests/          pytest suite
 
 ## Author
 
-**Dhruv Sharma**, M.S. Biotechnology, Johns Hopkins University. Works on sphingolipid and ceramide biology in vascular disease,
-colorectal cancer and neuroinflammation.
+**Dhruv Sharma** ([@DhruvASharma2004](https://github.com/DhruvASharma2004)).
+
+This is an independent personal project. It uses only public datasets and published literature. It is not affiliated with, funded by or derived from any laboratory or institution, and it contains no unpublished or institutional data.
 
 MIT licensed. Public data are subject to the terms of their GEO submitters.
